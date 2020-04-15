@@ -1,11 +1,11 @@
 import React from 'react';
 
 class SearchBar extends React.Component {
-    state = { term: '' };
+    state = { searchTerm: '' };
 
     onFormSubmit = e => {
         e.preventDefault();
-        console.log(e);
+        this.props.onSearchTermSubmit(this.state.searchTerm);
     }
 
     render() {
@@ -18,8 +18,8 @@ class SearchBar extends React.Component {
                             <input
                                 type="text"
                                 placeholder="search for your favourite video..."
-                                value={this.state.term}
-                                onChange={ e => this.setState({ term: e.target.value.toUpperCase() }) }>
+                                value={this.state.searchTerm}
+                                onChange={ e => this.setState({ searchTerm: e.target.value.toUpperCase() }) }>
                             </input>
                             <i className="video icon"></i>
                         </div>
