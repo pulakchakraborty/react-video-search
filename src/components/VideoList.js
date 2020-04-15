@@ -9,9 +9,8 @@ const VideoList = ({ videos, onVideoSelect }) => {
     });
 
     return(
-        <div>
-            <div>The search has returned {videos.length} videos</div>
-            <div>{renderedVideoList}</div>
+        <div className="ui relaxed divided list">
+            {renderedVideoList}
         </div>
     );
 }
