@@ -11,6 +11,10 @@ class App extends React.Component {
         selectedVideo: null
     };
 
+    componentDidMount() {
+        this.onSearchTermSubmit('Necrodeity');
+    }
+
     onSearchTermSubmit = async (searchTerm) => {
         const responseData = await youtube.get('/search', {
             params: {
