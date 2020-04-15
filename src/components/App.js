@@ -18,7 +18,10 @@ class App extends React.Component {
             }
         });
 
-        this.setState({ videos: responseData.data.items });
+        this.setState({
+            videos: responseData.data.items,
+            selectedVideo: responseData.data.items[0]
+        });
         console.log(this.state.videos);
     };
 
