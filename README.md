@@ -1,3 +1,9 @@
+# React Video Search Application
+
+The user can search for his/her favourite videos in the search box, upon which results will be fetched via an API call through YouTube Data API and rendered to the user.
+
+![Image description](https://github.com/pulakchakraborty/React-Video-Search/blob/master/public/Necrodeity-Live.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
