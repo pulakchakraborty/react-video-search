@@ -8,9 +8,10 @@ import VideoDetail from './VideoDetail';
 class App extends React.Component {
     state = {
         videos: [],
-        selectedVideo: null,
-        connectionIssue: false
+        selectedVideo: null
     };
+
+    connectionIssue = false;
 
     componentDidMount() {
         this.onSearchTermSubmit('Necrodeity');
@@ -31,7 +32,7 @@ class App extends React.Component {
             console.log(this.state.videos);
         } catch(e) {
             console.log(e);
-            this.setState( {connectionIssue: true} );
+            this.connectionIssue = true;
         }
     };
 
@@ -40,7 +41,7 @@ class App extends React.Component {
     }
 
     renderContent = ()  => {
-        if (this.state.connectionIssue) {
+        if (this.connectionIssue) {
             return(
                 <div>
                     OOPS!!!!! Something went wrong!!!!
