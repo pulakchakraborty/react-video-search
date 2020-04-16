@@ -8,30 +8,65 @@ import VideoDetail from './VideoDetail';
 class App extends React.Component {
     state = {
         videos: [],
-        selectedVideo: null
+        selectedVideo: null,
+        connectionIssue: false
     };
 
-    onSearchTermSubmit = async (searchTerm) => {
-        const responseData = await youtube.get('/search', {
-            params: {
-                q: searchTerm
-            }
-        });
+    componentDidMount() {
+        this.onSearchTermSubmit('Necrodeity');
+    }
 
-        this.setState({ videos: responseData.data.items });
-        console.log(this.state.videos);
+    onSearchTermSubmit = async (searchTerm) => {
+        try {
+            const responseData = await youtube.get('/search', {
+                params: {
+                    q: searchTerm
+                }
+            });
+
+            this.setState({
+                videos: responseData.data.items,
+                selectedVideo: responseData.data.items[0]
+            });
+            console.log(this.state.videos);
+        } catch(e) {
+            console.log(e);
+            this.setState( {connectionIssue: true} );
+        }
     };
 
     onVideoSelect = (video) => {
         this.setState({ selectedVideo: video });
     }
 
+    renderContent = ()  => {
+        if (this.state.connectionIssue) {
+            return(
+                <div>
+                    OOPS!!!!! Something went wrong!!!!
+                </div>
+            );
+        } else {
+            return(
+                <div className="ui grid">
+                    <div className="row">
+                        <div className="ten wide column">
+                            <VideoDetail video={this.state.selectedVideo} />
+                        </div>
+                        <div className="six wide column">
+                            <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     render() {
         return(
             <div className="ui container app">
                 <SearchBar onSearchTermSubmit={this.onSearchTermSubmit} />
-                <VideoDetail video={this.state.selectedVideo} />
-                <VideoList onVideoSelect={this.onVideoSelect} videos={this.state.videos} />
+                {this.renderContent()}
             </div>
         );
     }
