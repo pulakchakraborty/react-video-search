@@ -8,7 +8,8 @@ import VideoDetail from './VideoDetail';
 class App extends React.Component {
     state = {
         videos: [],
-        selectedVideo: null
+        selectedVideo: null,
+        connectionIssue: false
     };
 
     componentDidMount() {
@@ -16,27 +17,37 @@ class App extends React.Component {
     }
 
     onSearchTermSubmit = async (searchTerm) => {
-        const responseData = await youtube.get('/search', {
-            params: {
-                q: searchTerm
-            }
-        });
+        try {
+            const responseData = await youtube.get('/search', {
+                params: {
+                    q: searchTerm
+                }
+            });
 
-        this.setState({
-            videos: responseData.data.items,
-            selectedVideo: responseData.data.items[0]
-        });
-        console.log(this.state.videos);
+            this.setState({
+                videos: responseData.data.items,
+                selectedVideo: responseData.data.items[0]
+            });
+            console.log(this.state.videos);
+        } catch(e) {
+            console.log(e);
+            this.setState( {connectionIssue: true} );
+        }
     };
 
     onVideoSelect = (video) => {
         this.setState({ selectedVideo: video });
     }
 
-    render() {
-        return(
-            <div className="ui container app">
-                <SearchBar onSearchTermSubmit={this.onSearchTermSubmit} />
+    renderContent = ()  => {
+        if (this.state.connectionIssue) {
+            return(
+                <div>
+                    OOPS!!!!! Something went wrong!!!!
+                </div>
+            );
+        } else {
+            return(
                 <div className="ui grid">
                     <div className="row">
                         <div className="ten wide column">
@@ -47,6 +58,15 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
+            );
+        }
+    }
+
+    render() {
+        return(
+            <div className="ui container app">
+                <SearchBar onSearchTermSubmit={this.onSearchTermSubmit} />
+                {this.renderContent()}
             </div>
         );
     }
