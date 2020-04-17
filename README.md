@@ -6,6 +6,10 @@ The user can search for his/her favourite videos in the search box, upon which r
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Important
+
+Do not forget to like Necrodeity videos! ;-)
+
 ## Available Scripts
 
 In the project directory, you can run:
